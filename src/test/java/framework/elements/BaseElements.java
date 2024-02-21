@@ -78,24 +78,12 @@ public abstract class BaseElements {
         getElement().sendKeys(sendKeys);
     }
 
-    public void selectByValue(String v){
+    public void selectByValue(String v) {
         isElementPresent();
-      //  isElementSelectable();
         new Select(getElement()).selectByValue(v);
         waitForElementLoaded();
-
     }
 
-    public boolean isElementSelectable() {
-        try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(getIntProperty("element.timeout"))).
-                    until(ExpectedConditions.elementToBeSelected(getElement()));
-            return true;
-        } catch (TimeoutException e) {
-            System.out.println("Element isn't selectable:" + getElementType() + ": " + by);
-            return false;
-        }
-    }
     public boolean isSelected() {
         isElementPresent();
         System.out.println((getProperty("log.select") + getText()));
@@ -131,7 +119,29 @@ public abstract class BaseElements {
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].style.border='3px solid red'", element);
         getElement().click();
         waitForPageLoaded();
+    }
 
+    public void waitForElementLoaded() {
+        new WebDriverWait(driver, Duration.ofSeconds(PropertyReader.getIntProperty("element.load.timeout")));
+    }
+
+    public void scrollIntoView() {
+        isElementPresent();
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
+    public void moveAndClickByAction() {
+        Actions actions = new Actions(getDriver());
+        actions.moveToElement(element).click().perform();
+    }
+
+    public void moveToElement() {
+        Actions actions = new Actions(getDriver());
+        actions.moveToElement(element);
+    }
+
+    public String getAttribute(String attrName) {
+        return getElement().getAttribute(attrName);
     }
 
     public boolean isElementClickable() {
@@ -145,28 +155,14 @@ public abstract class BaseElements {
         }
     }
 
-    public void waitForElementLoaded(){
-        new WebDriverWait(driver, Duration.ofSeconds(PropertyReader.getIntProperty("element.load.timeout")));
-    }
-
-    public void scrollIntoView() {
-        isElementPresent();
-        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
-    }
-
-    public void moveAndClickByAction() {
-        Actions actions = new Actions(getDriver());
-        actions.moveToElement(element);
-        actions.clickAndHold();
-    }
-
-    public void moveByAction() {
-        Actions actions = new Actions(getDriver());
-        actions.moveToElement(element);
-    }
-
-    public String getAttribute(String attrName) {
-        WebElement findElem = getDriver().findElement(by);
-        return findElem.getAttribute(attrName);
+    public boolean isElementSelectable() {
+        try {
+            new WebDriverWait(getDriver(), Duration.ofSeconds(getIntProperty("element.timeout"))).
+                    until(ExpectedConditions.elementToBeSelected(getElement()));
+            return true;
+        } catch (TimeoutException e) {
+            System.out.println("Element isn't selectable:" + getElementType() + ": " + by);
+            return false;
+        }
     }
 }
