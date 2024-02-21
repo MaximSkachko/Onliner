@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Onliner-Web/Prod" parallel="tests" thread-count="1">
+    <test name="Filtration check">
+        <parameter name="manufacturer" value="Samsung"/>
+        <parameter name="diagonalFrom" value="40"/>
+        <parameter name="diagonalTo" value="50"/>
+        <parameter name="priceTo" value="2000"/>
+        <parameter name="resolution" value="1920x1080 (Full HD)"/>
+        <classes>
+            <class name="onliner.tests.FiltrationTest"/>
+        </classes>
+    </test>
+</suite>
