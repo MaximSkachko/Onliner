@@ -18,22 +18,12 @@ public class FiltrationTest extends BaseTest {
         cataloguePage.clickOnItemGroup("Телевидение");
         cataloguePage.clickOnSubItemGroup("Телевизоры");
 
-        ItemsPage itemsPage = new ItemsPage();
-        itemsPage.filters.checkManufacture(manufacturer);
-        itemsPage.filters.setToPrice(String.valueOf(priceTo));
-        itemsPage.filters.checkResolution(resolution);
-        itemsPage.filters.selectFromDiagonal("400");
-        Thread.sleep(5000);
-        itemsPage.filters.selectToDiagonal("500");
-        Thread.sleep(5000);
-
-        FilteredPage filteredPage = new FilteredPage();
-        filteredPage.checkManufacturerFilterApplied(manufacturer);
-        filteredPage.checkResolutionFilterApplied(resolution);
-        filteredPage.checkIfManufacturerMatch(manufacturer);
-        filteredPage.checkResolution(resolution);
-        filteredPage.checkInches(diagonalFrom, diagonalTo);
-        filteredPage.checkSpecialOfferPrice(priceTo);
-        filteredPage.checkPrices(priceTo);
+        TVPage tvPage = new TVPage();
+        tvPage.checkManufacture(manufacturer);
+        tvPage.setToPrice(String.valueOf(priceTo));
+        tvPage.checkResolutionCB(resolution);
+        tvPage.selectFromDiagonal("400");
+        tvPage.selectToDiagonal("500");
+        tvPage.validationOfAllFilters(manufacturer, resolution, diagonalFrom, diagonalTo, priceTo);
     }
 }
