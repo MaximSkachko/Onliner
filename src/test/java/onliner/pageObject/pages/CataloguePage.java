@@ -8,7 +8,6 @@ public class CataloguePage extends BaseOnlinerPage {
 
     private static final String PAGE_LOCATOR = "//div[@class='catalog-navigation__title' and text()='Каталог']";
     private static final String NAV_CATALOGUE_SUBITEM = "//div[@class='catalog-navigation-list__aside-item' and contains(., '%s')]";
-
     private static final String NAV_SUBITEM_GROUP = "//div[@data-id='1']//span[@class='catalog-navigation-list__dropdown-title' and contains(., '%s')]";
 
     public CataloguePage() {
